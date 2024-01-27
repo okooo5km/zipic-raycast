@@ -20,4 +20,4 @@
 
 ## Screen record
 
-<video src="https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/zipic-raycast-preview_1706370395.mp4" controls />
+https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/zipic_raycast_command_preview.mp4
