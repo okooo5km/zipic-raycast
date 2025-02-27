@@ -78,3 +78,20 @@ This extension uses Zipic's URL scheme to compress images. The URL format follow
 ## Screen record
 
 <https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/zipic_raycast_command_preview.mp4>
+
+## Features
+
+- **Direct Compression**: Compress selected files using Zipic's built-in settings
+- **Custom Options**: Customize compression level, output format, save location, and more
+- **Preset Management**: Create, edit, and manage custom compression presets
+- **Preset Compression**: Quickly compress images using saved presets
+- **AI Tool Support**: Provides AI tool functions for use in AI commands
+
+## Usage
+
+1. Select image files in Finder
+2. Call the appropriate command in Raycast:
+   - `Compress Images`: Compress using Zipic's built-in settings
+   - `Compress Images with Options`: Compress with custom options
+   - `Compress Images with Preset`: Compress using a saved preset
+   - `Manage Compression Presets`: Manage your compression presets
