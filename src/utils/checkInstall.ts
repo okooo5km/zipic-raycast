@@ -11,11 +11,11 @@ export async function checkZipicInstallation(): Promise<boolean> {
     const options: Toast.Options = {
       style: Toast.Style.Failure,
       title: "Zipic is not installed.",
-      message: "Install it from: https://zipic.5km.tech",
+      message: "Install it from: https://zipic.app",
       primaryAction: {
-        title: "Go to https://zipic.5km.tech",
+        title: "Go to https://zipic.app",
         onAction: (toast) => {
-          open("https://zipic.5km.tech");
+          open("https://zipic.app");
           toast.hide();
         },
       },

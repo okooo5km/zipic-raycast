@@ -16,6 +16,156 @@
       "subtitle": "Zipic",
       "description": "Compress the selected images in Finder with Zipic.",
       "mode": "no-view",
+      "icon": "zipic-icon.png",
+      "preferences": [
+        {
+          "name": "level",
+          "title": "Compression Level",
+          "description": "The higher the level, the greater the compression and the lower the quality (1-6)",
+          "type": "textfield",
+          "default": "3.0",
+          "placeholder": "3.0",
+          "required": false
+        },
+        {
+          "name": "format",
+          "title": "Output Format",
+          "description": "Specifies the desired output format",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "Original",
+              "value": "original"
+            },
+            {
+              "title": "JPEG",
+              "value": "jpeg"
+            },
+            {
+              "title": "WebP",
+              "value": "webp"
+            },
+            {
+              "title": "HEIC",
+              "value": "heic"
+            },
+            {
+              "title": "AVIF",
+              "value": "avif"
+            },
+            {
+              "title": "PNG",
+              "value": "png"
+            }
+          ],
+          "default": "original",
+          "required": false
+        },
+        {
+          "name": "location",
+          "title": "Save Location",
+          "description": "Where to save the compressed images",
+          "type": "dropdown",
+          "data": [
+            {
+              "title": "Original Location",
+              "value": "original"
+            },
+            {
+              "title": "Custom Location",
+              "value": "custom"
+            }
+          ],
+          "default": "original",
+          "required": false
+        },
+        {
+          "name": "specified",
+          "title": "Use Default Save Directory",
+          "description": "Enable to use Zipic's default save directory instead of specifying one",
+          "type": "checkbox",
+          "default": false,
+          "required": false,
+          "dependsOn": [
+            "location"
+          ],
+          "dependsOnValue": [
+            "custom"
+          ]
+        },
+        {
+          "name": "directory",
+          "title": "Custom Directory",
+          "description": "Path to save the compressed files (only used when Location is set to Custom and Use Default Save Directory is disabled)",
+          "type": "textfield",
+          "placeholder": "/Users/username/Desktop",
+          "required": false,
+          "dependsOn": [
+            "location",
+            "specified"
+          ],
+          "dependsOnValue": [
+            "custom",
+            false
+          ]
+        },
+        {
+          "name": "width",
+          "title": "Width",
+          "description": "Sets the desired width (0 for auto-adjust)",
+          "type": "textfield",
+          "default": "0",
+          "placeholder": "0",
+          "required": false
+        },
+        {
+          "name": "height",
+          "title": "Height",
+          "description": "Sets the desired height (0 for auto-adjust)",
+          "type": "textfield",
+          "default": "0",
+          "placeholder": "0",
+          "required": false
+        },
+        {
+          "name": "addSuffix",
+          "title": "Add Suffix",
+          "description": "Add a suffix to the compressed file names",
+          "type": "checkbox",
+          "default": false,
+          "required": false
+        },
+        {
+          "name": "suffix",
+          "title": "Suffix",
+          "description": "Suffix to add to the compressed file names",
+          "type": "textfield",
+          "default": "-compressed",
+          "placeholder": "-compressed",
+          "required": false,
+          "dependsOn": [
+            "addSuffix"
+          ],
+          "dependsOnValue": [
+            true
+          ]
+        },
+        {
+          "name": "addSubfolder",
+          "title": "Add Subfolder",
+          "description": "Save compressed files in a subfolder",
+          "type": "checkbox",
+          "default": false,
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "compressImagesWithOptions",
+      "title": "Compress Images with Options",
+      "subtitle": "Zipic",
+      "description": "Configure compression options before compressing selected images with Zipic.",
+      "mode": "view",
       "icon": "zipic-icon.png"
     }
   ],
