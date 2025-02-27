@@ -14,14 +14,25 @@
 
 ## Commands
 
-| name                       | description                                                  |
-| -------------------------- | ------------------------------------------------------------ |
-| `Compress Images`          | Compress selected images with Zipic using default settings.  |
-| `Compress Images with Options` | Configure compression options before compressing selected images. |
+### Compress Images
+
+Compress the selected images in Finder with Zipic using app settings. This command directly uses the settings configured in the Zipic app without any additional options.
+
+### Compress Images with Options
+
+Compress the selected images in Finder with Zipic, allowing you to configure compression options before processing.
+
+### Compress Images with Preset
+
+Compress the selected images in Finder with Zipic using a saved preset.
+
+### Manage Presets
+
+Create, edit, and manage your compression presets.
 
 ## Compression Options
 
-This extension supports configuring compression options in two ways:
+This extension supports configuring compression options in three ways:
 
 ### 1. Default Settings
 
@@ -31,7 +42,7 @@ You can set default compression options in the extension preferences:
 - **Output Format**: Choose from original, JPEG, WebP, HEIC, AVIF, or PNG formats.
 - **Save Location**: Save to the original location or a custom directory.
 - **Use Default Save Directory**: When using custom location, enable this to use Zipic's default save directory.
-- **Custom Directory**: Specify a custom directory when using custom save location and not using default save directory.
+- **Custom Directory**: Select a directory using a folder picker when using custom save location and not using default save directory.
 - **Width/Height**: Resize images to specific dimensions (0 for auto-adjust).
 - **Add Suffix**: Add a suffix to compressed file names.
 - **Suffix**: Customize the suffix for compressed files.
@@ -45,6 +56,20 @@ Use the `Compress Images with Options` command to configure compression options 
 - Preview the selected files before compression
 - Customize all compression parameters in a user-friendly interface
 - Select a save directory using a folder picker when using custom location
+
+### 3. Presets
+
+Use the `Manage Compression Presets` command to create and manage presets:
+
+- **Create Presets**: Save your frequently used compression settings as named presets
+- **Edit Presets**: Modify existing presets as needed
+- **Set Default Preset**: Choose a preset to be used by the `Compress Images` command
+- **Use Zipic App Settings**: Option to use Zipic's internal settings without specifying parameters
+
+Then use the `Compress Images with Preset` command to:
+
+- Choose from your saved presets for quick compression
+- Use Zipic's internal settings for compression
 
 ## URL Scheme
 

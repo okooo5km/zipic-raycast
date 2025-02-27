@@ -2,6 +2,7 @@ import {
   Action,
   ActionPanel,
   Form,
+  Icon,
   showToast,
   Toast,
   getSelectedFinderItems,
@@ -31,7 +32,7 @@ interface FormValues {
   level: string;
   format: string;
   location: string;
-  directory: string[];
+  directory: string;
   width: string;
   height: string;
   addSuffix: boolean;
@@ -49,12 +50,12 @@ export default function Command() {
   // 获取默认偏好设置
   const preferences = getPreferenceValues<CompressionOptions>();
 
-  // 初始化表单值
+  // 初始化表单值，确保 level 是字符串且为有效值
   const [formValues, setFormValues] = useState<FormValues>({
-    level: preferences.level?.toString() || "3.0",
+    level: preferences.level ? String(parseInt(preferences.level.toString())) : "3",
     format: preferences.format || "original",
     location: preferences.location || "original",
-    directory: preferences.directory ? [preferences.directory] : [],
+    directory: preferences.directory || "",
     width: preferences.width?.toString() || "0",
     height: preferences.height?.toString() || "0",
     addSuffix: preferences.addSuffix || false,
@@ -137,8 +138,8 @@ export default function Command() {
         if (values.location === "custom") {
           if (values.specified) {
             urlParams += `specified=true&`;
-          } else if (values.directory && values.directory.length > 0) {
-            urlParams += `directory=${encodeURIComponent(values.directory[0])}&`;
+          } else if (values.directory) {
+            urlParams += `directory=${encodeURIComponent(values.directory)}&`;
           }
         }
       }
@@ -172,7 +173,7 @@ export default function Command() {
       await showToast({
         style: Toast.Style.Success,
         title: "Compressing with Zipic",
-        message: `Compressing ${filePaths.length} file(s)`,
+        message: `Compressing ${filePaths.length} item(s)`,
       });
 
       exec(`open "${url}"`);
@@ -195,23 +196,35 @@ export default function Command() {
       isLoading={isLoading}
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="Compress Images" onSubmit={handleSubmit} />
+          <Action.SubmitForm title="Compress Images" icon={Icon.Compass} onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >
-      <Form.Description text={`Selected ${filePaths.length} file(s) for compression`} />
+      <Form.Description text={`Selected ${filePaths.length} item(s) for compression`} />
 
       <Form.Separator />
 
-      <Form.TextField
+      <Form.Dropdown
         id="level"
         title="Compression Level"
-        placeholder="3.0"
-        info="The higher the level, the greater the compression and the lower the quality (1-6)"
-        defaultValue={formValues.level}
-      />
+        info="Lower levels preserve more quality but result in larger files"
+        value={formValues.level}
+        onChange={(newValue) => setFormValues({ ...formValues, level: newValue })}
+      >
+        <Form.Dropdown.Item value="1" title="Level 1 - Highest Quality" />
+        <Form.Dropdown.Item value="2" title="Level 2 - Very Good Quality" />
+        <Form.Dropdown.Item value="3" title="Level 3 - Good Quality (Recommended)" />
+        <Form.Dropdown.Item value="4" title="Level 4 - Medium Quality" />
+        <Form.Dropdown.Item value="5" title="Level 5 - Low Quality" />
+        <Form.Dropdown.Item value="6" title="Level 6 - Lowest Quality" />
+      </Form.Dropdown>
 
-      <Form.Dropdown id="format" title="Output Format" defaultValue={formValues.format}>
+      <Form.Dropdown
+        id="format"
+        title="Output Format"
+        value={formValues.format}
+        onChange={(newValue) => setFormValues({ ...formValues, format: newValue })}
+      >
         <Form.Dropdown.Item value="original" title="Original" />
         <Form.Dropdown.Item value="jpeg" title="JPEG" />
         <Form.Dropdown.Item value="webp" title="WebP" />
@@ -223,13 +236,13 @@ export default function Command() {
       <Form.Dropdown
         id="location"
         title="Save Location"
-        defaultValue={formValues.location}
+        value={formValues.location}
         onChange={(newValue) => {
           setFormValues({
             ...formValues,
             location: newValue,
             // 如果切换到 original，重置 specified 和 directory
-            ...(newValue === "original" ? { specified: false, directory: [] } : {}),
+            ...(newValue === "original" ? { specified: false, directory: "" } : {}),
           });
         }}
       >
@@ -244,7 +257,7 @@ export default function Command() {
             title="Use Default Save Directory"
             label="Use Default Save Directory"
             info="Enable to use Zipic's default save directory instead of specifying one"
-            defaultValue={formValues.specified}
+            value={formValues.specified}
             onChange={(value) => setFormValues({ ...formValues, specified: value })}
           />
 
@@ -255,8 +268,13 @@ export default function Command() {
               allowMultipleSelection={false}
               canChooseDirectories
               canChooseFiles={false}
-              value={formValues.directory}
-              onChange={(newValue) => setFormValues({ ...formValues, directory: newValue })}
+              info="Select a directory to save the compressed files"
+              value={formValues.directory ? [formValues.directory] : []}
+              onChange={(paths) => {
+                if (paths.length > 0) {
+                  setFormValues({ ...formValues, directory: paths[0] });
+                }
+              }}
             />
           )}
         </>
@@ -267,7 +285,8 @@ export default function Command() {
         title="Width"
         placeholder="0"
         info="Sets the desired width (0 for auto-adjust)"
-        defaultValue={formValues.width}
+        value={formValues.width}
+        onChange={(value) => setFormValues({ ...formValues, width: value })}
       />
 
       <Form.TextField
@@ -275,14 +294,15 @@ export default function Command() {
         title="Height"
         placeholder="0"
         info="Sets the desired height (0 for auto-adjust)"
-        defaultValue={formValues.height}
+        value={formValues.height}
+        onChange={(value) => setFormValues({ ...formValues, height: value })}
       />
 
       <Form.Checkbox
         id="addSuffix"
         title="Add Suffix"
         label="Add Suffix"
-        defaultValue={formValues.addSuffix}
+        value={formValues.addSuffix}
         onChange={(value) => setFormValues({ ...formValues, addSuffix: value })}
       />
 
@@ -292,7 +312,8 @@ export default function Command() {
           title="Suffix"
           placeholder="-compressed"
           info="Suffix to add to the compressed file names"
-          defaultValue={formValues.suffix}
+          value={formValues.suffix}
+          onChange={(value) => setFormValues({ ...formValues, suffix: value })}
         />
       )}
 
@@ -300,7 +321,8 @@ export default function Command() {
         id="addSubfolder"
         title="Add Subfolder"
         label="Add Subfolder"
-        defaultValue={formValues.addSubfolder}
+        value={formValues.addSubfolder}
+        onChange={(value) => setFormValues({ ...formValues, addSubfolder: value })}
       />
     </Form>
   );
