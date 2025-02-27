@@ -73,11 +73,7 @@ Then use the `Compress Images with Preset` command to:
 
 ## URL Scheme
 
-This extension uses Zipic's URL scheme to compress images. The URL format follows the official Zipic documentation:
-
-```
-zipic://compress?url=/path/to/image1&url=/path/to/image2&level=3.0&format=webp...
-```
+This extension uses Zipic's URL scheme to compress images. The URL format follows the [official Zipic documentation](https://docs.zipic.app/guides/optimizing-workflow/#url-scheme):
 
 ## Screen record
 
