@@ -10,7 +10,7 @@
 
 [**Zipic**](https://zipic.app) needs to be installed in order to use this extension.
 
-<img src="https://pichome-1254392422.cos.ap-chengdu.myqcloud.com/uPic/zipic.webp" width="800">
+<video src="https://storage.5km.host/zipic/zipic.mp4" width="800" autoplay loop muted></video>
 
 ## Commands
 
