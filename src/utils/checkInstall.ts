@@ -1,8 +1,12 @@
 import { getApplications, showToast, Toast, open } from "@raycast/api";
 
 async function isZipicInstalled() {
-  const applications = await getApplications();
-  return applications.some(({ bundleId }) => bundleId === "studio.5km.zipic");
+  try {
+    const applications = await getApplications();
+    return applications.some(({ bundleId }) => bundleId === "studio.5km.zipic");
+  } catch (error) {
+    return false;
+  }
 }
 
 export async function checkZipicInstallation(): Promise<boolean> {
